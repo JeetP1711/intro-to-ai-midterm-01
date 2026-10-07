@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Mastery — Introduction to Artificial Intelligence</title>
+<style>
+:root{--bg:#0a1128;--bg2:#101a3a;--card:#142049;--tx:#e8edff;--mu:#9aa8d6;--ac:#3d7bff;--cy:#22d3ee;--pu:#8b5cf6;--ok:#22c55e;--bad:#ef4444;--bd:#26356b}
+[data-theme=light]{--bg:#f2f5ff;--bg2:#fff;--card:#fff;--tx:#0f1b3d;--mu:#4a5880;--ac:#1f56e0;--cy:#0891b2;--pu:#6d3fd8;--bd:#cfd8f5}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.6 "Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--tx);display:flex}
+h1,h2,h3{line-height:1.2;margin:.2em 0 .5em;font-family:Georgia,"Times New Roman",serif}
+nav{width:230px;background:var(--bg2);border-right:1px solid var(--bd);padding:16px 10px;overflow:auto;flex:none}
+nav .logo{font:700 20px Georgia,serif;padding:6px 10px 14px;color:var(--cy)}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--tx);padding:9px 12px;border-radius:8px;cursor:pointer;font:inherit}
+nav button:hover,nav button.on{background:linear-gradient(90deg,var(--ac),var(--pu));color:#fff}
+main{flex:1;overflow:auto;padding:28px;min-width:0}
+.wrap{max-width:980px;margin:auto}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.btn{background:linear-gradient(135deg,var(--ac),var(--pu));color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font:600 15px inherit;margin:3px}
+.btn.alt{background:transparent;border:1px solid var(--cy);color:var(--cy)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--cy);outline-offset:2px}
+.hero{padding:36px 28px;border-radius:18px;background:radial-gradient(circle at 85% 20%,rgba(139,92,246,.45),transparent 50%),radial-gradient(circle at 10% 90%,rgba(34,211,238,.25),transparent 45%),var(--bg2);border:1px solid var(--bd)}
+.hero h1{font-size:clamp(30px,5vw,50px)}.hero p{color:var(--mu);max-width:640px}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:14px 0}
+.flow span{background:var(--card);border:1px solid var(--cy);border-radius:8px;padding:6px 12px;font-weight:600;animation:pulse 5s infinite}
+.flow span:nth-child(3){animation-delay:1s}.flow span:nth-child(5){animation-delay:2s}.flow span:nth-child(7){animation-delay:3s}.flow span:nth-child(9){animation-delay:4s}
+@keyframes pulse{0%,18%,100%{box-shadow:none}8%{box-shadow:0 0 14px var(--cy)}}
+.bar{height:10px;background:var(--bd);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cy),var(--ac));transition:width .4s}
+.stat{font:700 30px Georgia,serif;color:var(--cy)}.mu{color:var(--mu);font-size:14px}
+.tag{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--bd)}.done{color:var(--ok)}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--bd);background:var(--bg2);color:var(--tx);cursor:pointer;font:inherit}
+.opt.sel{border-color:var(--ac);background:rgba(61,123,255,.2)}.opt.right{border-color:var(--ok);background:rgba(34,197,94,.2)}.opt.wrong{border-color:var(--bad);background:rgba(239,68,68,.2)}
+.fc{min-height:190px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:20px;cursor:pointer;background:linear-gradient(135deg,var(--card),var(--bg2))}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid var(--bd);padding:8px;text-align:left;vertical-align:top}
+.tbl{overflow-x:auto}
+.cell{width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--bd);font-size:26px;background:var(--bg2)}
+.pal button{width:36px;height:36px;margin:2px;border-radius:8px;border:1px solid var(--bd);background:var(--bg2);color:var(--tx);cursor:pointer}
+.pal .a{background:var(--ac);color:#fff}.pal .m{border-color:#f59e0b;border-width:2px}
+input[type=search]{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--bd);background:var(--bg2);color:var(--tx);font:inherit}
+.menu{display:none}
+@media(max-width:800px){.menu{display:block;position:fixed;top:8px;left:8px;z-index:20}nav{position:fixed;inset:0 30% 0 0;z-index:15;transform:translateX(-100%);transition:.25s}nav.open{transform:none}main{padding:56px 14px 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<button class="btn menu" id="menu" aria-label="Toggle menu">☰</button>
+<nav id="nav" aria-label="Main"></nav>
+<main><div class="wrap" id="app" tabindex="-1"></div></main>
+<script>
+/* ===== DATA: lessons [id, unit, title, difficulty, definition, explanation, keyPoints, example, examTip] ===== */
+const L=[
+["ai-def",1,"Definition of AI","Beginner","AI is the ability of machines to perform tasks that normally need human intelligence, such as learning, reasoning, problem solving and decision making.","'Artificial' means built by humans; 'intelligence' means the ability to learn, reason, perceive and act towards goals. Technically, AI is the study and design of systems that perceive their environment and take actions that maximise their chance of achieving goals. AI systems do not need to think like humans; they need to produce useful intelligent behaviour.",["Intelligence: learning, reasoning, perception","Machine intelligence: done by computers","Decision making and problem solving","Learns from data instead of fixed rules only"],"Example: Netflix recommendations, voice assistants, fraud detection, face unlock, self-driving cars.","Exam definition: 'AI is the branch of computer science that builds systems able to perform tasks requiring human intelligence.' Easy way: Artificial + Intelligence = machine that learns and decides."],
+["ai-scope",1,"Scope of AI","Beginner","The scope of AI is the set of areas where AI techniques are applied: ML, NLP, computer vision, robotics, expert systems, speech recognition, planning and decision making.","AI is an umbrella field. Machine Learning learns from data; NLP handles human language; Computer Vision understands images; Robotics gives machines physical action; Expert Systems encode expert rules; Speech Recognition converts voice to text; Planning chooses action sequences; Decision Making picks the best option. These areas overlap: a self-driving car uses vision, planning and ML together.",["ML is a subfield of AI","NLP = language","CV = images and video","Robotics = perception + action","Expert systems = rule-based knowledge"],"Example: A smart assistant uses speech recognition + NLP + ML.","Draw the tree: AI at top with ML, NLP, CV, Robotics, Expert Systems below, and say they overlap."],
+["ai-history",1,"History and Evolution of AI","Beginner","AI's history is the progression from early ideas about thinking machines to today's data-driven deep learning systems.","Early ideas (1940s–50s): Turing asked 'Can machines think?'. Birth (1956): Dartmouth workshop coined 'Artificial Intelligence'. Early research (1956–70s): game playing and logic programs. Expert systems (1980s): rule-based systems for medicine and business. AI winters: funding fell when promises were not met. Machine learning (1990s–2000s): learning from data. Deep learning (2010s): large neural networks. Modern AI (2020s): powerful generative and assistant systems.",["1950 Turing test idea","1956 Dartmouth: AI named","Expert systems 1980s","AI winters = reduced funding","ML then deep learning, driven by data and computing power"],"Example: Chess programs → expert systems → image recognition → chat assistants.","Remember the order: Idea → Birth → Early → Expert → Winter → ML → DL → Modern."],
+["ai-apps",1,"Applications of AI","Beginner","AI applications are real uses of AI in industries and daily life.","Healthcare: image-based diagnosis support. Finance: fraud detection. Manufacturing: predictive maintenance. Retail: recommendations. Transportation: navigation and autonomous vehicles. Education: adaptive learning. Cybersecurity: threat detection. Agriculture: crop monitoring. Society: assistants, translation, accessibility tools. Each application has benefits and risks such as bias or privacy loss.",["Problem → AI solution → benefit → risk","Industry and society uses","Always mention risks"],"Example: A bank flags unusual card transactions as possible fraud.","Write each application as: problem, AI solution, example, benefits, risks."],
+["agents",1,"Intelligent Agents","Intermediate","An intelligent agent perceives its environment through sensors and acts on it through actuators to achieve goals.","Loop: Percept (sensors) → Decision (agent program) → Action (actuators) → Feedback from environment. Examples: robot vacuum, self-driving car, virtual assistant, game-playing AI. A rational agent chooses the action expected to give the best outcome. Try the simulation below.",["Agent, environment, sensors, actuators","Perception → decision → action → feedback","Rational agent maximises performance"],"Example: A room-cleaning robot senses dirt and decides to clean or move.","Always draw Environment → Sensors → Agent → Actuators → Environment."],
+["ethics",1,"Ethics of AI","Beginner","AI ethics is the set of moral principles guiding the design and use of AI so it benefits people and avoids harm.","AI affects hiring, loans, health and justice, so errors scale fast. Ethics asks: Is it fair? Can we understand it? Is data protected? Who is responsible? Core themes: bias, transparency, privacy, accountability and responsible AI.",["Fairness","Transparency","Privacy","Accountability","Human well-being"],"Example: A hiring tool must not reject candidates because of gender.","List the five themes and one line each."],
+["bias",1,"Bias in AI","Intermediate","AI bias is systematic unfair output caused by biased data, design or use.","Flow: Training data → Biased data → AI model → Biased output. Sources: unrepresentative data, historical prejudice, labelling errors, poor feature choice. Reduce it with diverse data, bias testing across groups, human review and monitoring.",["Data bias, label bias, selection bias","Biased input → biased output","Mitigation: diverse data, audits, monitoring"],"Example: A face system trained mostly on one group performs worse on others.","Say 'garbage in, bias out' and give 3 mitigation steps."],
+["transparency",1,"Transparency in AI","Intermediate","Transparency means users can understand how and why an AI system reaches its decisions.","A black-box system gives output with no reasoning (Input → Black box → Decision). A transparent system gives Input → AI → Decision → Explanation. Transparency builds trust, supports fixing errors and allows people to challenge decisions.",["Black box vs explainable","Builds trust","Supports challenge and audit"],"Example: A loan app shows the reasons for rejection.","Contrast black box with explainable AI."],
+["privacy",1,"Privacy in AI","Intermediate","Privacy in AI is protecting personal data collected, stored and used by AI systems.","AI needs data (personal details, location, images, voice, online activity). Risks: misuse, leaks, tracking, profiling. Good practice: collect only what is needed, get consent, secure storage, anonymise, allow deletion.",["Consent","Data minimisation","Anonymisation","Security"],"Example: A fitness app should not share health data without consent.","Give risks plus responsible handling."],
+["accountability",1,"Accountability in AI","Intermediate","Accountability means clearly identifying who is responsible for AI decisions and their harms.","Responsibility is shared: developers (design, testing), organisations (policy, deployment), system owners (oversight) and users (correct use). Flow: Harm → investigate → identify responsible party → fix and compensate.",["Developers, organisations, owners, users","Audit trails","Human oversight"],"Example: If an AI medical tool errs, the hospital and vendor must answer.","Mention all four stakeholders."],
+["responsible",1,"Responsible AI Practices","Intermediate","Responsible AI is developing and using AI that is fair, transparent, private, secure, accountable and human-centred.","Six principles: Fair, Transparent, Private, Secure, Accountable, Human-centred. Use the checklist below to evaluate a system.",["Fair","Transparent","Privacy-aware","Secure","Accountable","Human oversight"],"Example: A hospital AI with human doctors confirming each result.","Remember FTPSAH."],
+["data-types",2,"Types of Data","Beginner","Data is raw facts and figures; by organisation it is structured, semi-structured or unstructured.","Structured: fixed tables (databases). Semi-structured: tags/keys without rigid tables (JSON, XML). Unstructured: no predefined format (images, audio, video, text). Most real-world data is unstructured.",["Structured: tables","Semi-structured: JSON, XML","Unstructured: images, audio, text"],"Example: Excel sheet vs JSON API vs photo.","Use a 3-column comparison table."],
+["structured",2,"Structured Data","Beginner","Structured data is organised in fixed rows and columns with a defined schema.","Each row is a record and each column a field, e.g. ID, Name, Age, City. Easy to search with SQL and easy for ML models. Limited flexibility.",["Schema","Rows and columns","SQL queries"],"Example: Student database table.","Say 'fixed schema' in the definition."],
+["semi",2,"Semi-structured Data","Beginner","Semi-structured data has tags or keys that organise it but not a rigid table schema.","JSON example: {\"name\":\"John\",\"age\":21,\"city\":\"Ahmedabad\"}. Keys (name) label values (John). Structures can be nested and fields can vary between records.",["Keys and values","Nested structure","JSON, XML"],"Example: Web API responses.","Quote a small JSON example."],
+["unstructured",2,"Unstructured Data","Beginner","Unstructured data has no predefined format or organisation.","Images, video, audio, documents and natural language text. It is the most common type and needs special processing to extract features before ML can use it.",["No schema","Largest share of data","Needs feature extraction"],"Example: Photos, voice recordings, emails.","Give four examples."],
+["collection",2,"Data Collection","Beginner","Data collection is gathering data from sources for analysis or AI training.","Sources: sensors, surveys, websites, applications, databases, devices, user interactions. Pipeline: Sources → Collection → Storage → Processing → Analysis. Quality issues: missing values, noise, duplicates, bias, outdated data.",["Sources","Pipeline","Data quality issues"],"Example: Traffic sensors feed a navigation app.","Mention data quality problems."],
+["preprocessing",2,"Data Preprocessing","Intermediate","Data preprocessing prepares raw data for analysis and learning.","Raw data → Cleaning → Missing values → Remove duplicates → Transformation → Normalisation → Prepared data. Normalisation scales values to a common range, e.g. 0–1. Try the demo below.",["Cleaning","Missing values","Duplicates","Normalisation"],"Example: Replace a missing age with the average age.","List all pipeline stages in order."],
+["representation",2,"Data Representation","Intermediate","Data representation is converting real-world data into forms (numbers, features) computers can process.","Numerical: numbers directly. Categorical: categories coded as numbers. Text: converted to numbers. Image: grid of pixel values. Feature: a measurable property. Flow: Real object → Data → Features → ML system.",["Numerical, categorical, text, image","Features","Real object → features"],"Example: A house described by area, rooms, price.","Define 'feature' with an example."],
+["supervised",2,"Supervised Learning","Intermediate","Supervised learning learns from labelled data to predict outputs for new inputs.","Training data has features and labels. Model learns the relationship. Classification predicts categories (spam or not); regression predicts numbers (marks from study hours). Try the predictor below.",["Labels","Classification","Regression","Prediction"],"Example: Study hours → expected marks.","Keyword: labelled data."],
+["unsupervised",2,"Unsupervised Learning","Intermediate","Unsupervised learning finds patterns or groups in data without labels.","No answers are given. The model discovers structure, e.g. clustering customers into groups by behaviour. Used for pattern discovery and grouping.",["No labels","Clustering","Pattern discovery"],"Example: Grouping customers by buying habits.","Keyword: unlabelled data."],
+["reinforcement",2,"Reinforcement Learning","Intermediate","Reinforcement learning is learning by interacting with an environment and receiving rewards or penalties.","An agent observes a state, takes an action, receives a reward or penalty and updates its behaviour to maximise total reward. Play the grid world below.",["Agent, environment","State, action","Reward and penalty"],"Example: A game-playing AI improving by playing.","Keyword: reward."],
+["hci",2,"Human-Computer Interaction","Beginner","HCI studies how people interact with computers and how to design usable interfaces.","Human → Interface → AI/computer → Output → Human. Elements: user input, system processing, output, feedback. AI interfaces: voice assistants, chatbots, recommendations, smart devices. Good HCI is usable, clear and human-centred.",["Input, processing, output, feedback","Usability","Human-centred design"],"Example: Asking a voice assistant for the weather.","Draw the loop and name usability."],
+["datascience",2,"Introduction to Data Science","Beginner","Data science extracts insights and knowledge from data to support decisions.","Data → Processing → Analysis → Insights → Decision. AI and data science overlap but are not identical: data science focuses on insights from data; AI focuses on building intelligent behaviour. Data science often uses ML as a tool.",["Insights from data","Overlaps with AI","Not identical to AI"],"Example: Analysing sales data to plan stock.","Never say AI = data science."],
+["aiworkflow",2,"AI Workflow","Intermediate","An AI workflow is the series of stages to build and run an AI system.","Click each stage in the visual below: Problem, Data Collection, Data Preparation, Data Representation, Learning/Model Development, Evaluation, Deployment, Monitoring/Improvement.",["8 stages","Iterative","Monitoring after deployment"],"Example: Building a spam filter.","Write stages in order."],
+["dsworkflow",2,"Data Science Workflow","Intermediate","A data science workflow is the series of steps from a question to a data-driven decision.","Stages: Problem Definition, Data Collection, Data Cleaning, Exploration, Analysis, Model/Solution, Evaluation, Communication, Decision. Compared with AI workflow: both are iterative and data-centred; data science ends in communicating insights, AI workflow ends in deployed system.",["9 stages","Exploration and communication","Ends with decision"],"Example: Finding why sales dropped.","Contrast with AI workflow."]
+];
+const WF={aiworkflow:["Problem|Define the task AI should solve.","Data Collection|Gather relevant data.","Data Preparation|Clean and organise data.","Data Representation|Convert to features.","Learning / Model Development|Train the model.","Evaluation|Test on unseen data.","Deployment|Put into real use.","Monitoring / Improvement|Track and update."],dsworkflow:["Problem Definition|State the question.","Data Collection|Get data.","Data Cleaning|Fix errors.","Exploration|Find patterns and summaries.","Analysis|Apply methods.","Model / Solution|Build the answer.","Evaluation|Check validity.","Communication|Present insights.","Decision|Act on findings."]};
+/* Questions: [lessonIndex, question, options, answerIndex, explanation] */
+const Q=[
+[0,"Which best defines AI?",["Machines doing tasks needing human intelligence","Any computer","A database","A programming language"],0,"AI = machines performing tasks that need intelligence."],
+[0,"A fraud detection system is an example of AI.",["True","False"],0,"It learns patterns to decide."],
+[1,"Which is NOT a major AI area?",["NLP","Computer Vision","Word processing","Robotics"],2,"Word processing is a software tool."],
+[1,"Machine Learning is ___ AI.",["A subfield of","Identical to","Unrelated to","Larger than"],0,"ML is a subfield of AI."],
+[2,"The term 'Artificial Intelligence' was coined at:",["Dartmouth 1956","Paris 1990","MIT 2010","Turing 1950"],0,"Dartmouth workshop, 1956."],
+[2,"AI winters were periods of:",["Reduced funding and interest","Fast growth","New hardware","Law changes"],0,"Unmet promises reduced funding."],
+[3,"Detecting unusual card transactions is a ___ application.",["Finance","Agriculture","Education","Retail"],0,"Fraud detection is finance."],
+[4,"Which component lets an agent act on the environment?",["Actuators","Sensors","Database","Compiler"],0,"Actuators perform actions."],
+[4,"Correct agent loop:",["Sense → decide → act","Act → sense → decide only once","Decide → store","Compile → run"],0,"Perception, decision, action, feedback."],
+[5,"AI ethics mainly asks:",["Is it fair, transparent, private and accountable?","Is it fast?","Is it cheap?","Is it colourful?"],0,"These are ethics themes."],
+[6,"A face system works poorly on groups missing from training data. This is:",["Bias","Transparency","Encryption","Normalisation"],0,"Unrepresentative data causes bias."],
+[6,"Biased training data usually produces:",["Biased output","Perfect output","No output","Encrypted output"],0,"Biased data → biased output."],
+[7,"A black-box AI is one that:",["Gives decisions without explainable reasoning","Is physically black","Has no data","Is offline"],0,"Reasoning is hidden."],
+[8,"Collecting only the data needed is:",["Data minimisation","Overfitting","Clustering","Normalisation"],0,"A privacy practice."],
+[9,"Accountability asks:",["Who is responsible for AI harm?","How fast is it?","What colour?","What language?"],0,"Responsibility assignment."],
+[10,"Which is a responsible AI principle?",["Human oversight","Hidden decisions","Unlimited data","Ignoring users"],0,"Human-centred oversight."],
+[11,"JSON is:",["Semi-structured","Structured table","Unstructured image","Audio"],0,"Keys and values with flexible structure."],
+[12,"A table with fixed columns is:",["Structured data","Unstructured data","A video","Text"],0,"Fixed schema."],
+[13,"In {\"name\":\"John\"}, 'name' is the:",["Key","Value","Label","Table"],0,"name is key; John is value."],
+[14,"Which is unstructured data?",["Photographs","SQL table","Spreadsheet","Schema"],0,"Images have no schema."],
+[15,"Which is a data quality issue?",["Missing values","Fast CPU","Big screen","Dark mode"],0,"Missing or noisy data hurts quality."],
+[16,"Scaling values to 0–1 is:",["Normalisation","Collection","Labelling","Clustering"],0,"Normalisation scales values."],
+[16,"First step in preprocessing pipeline from raw data:",["Cleaning","Deployment","Evaluation","Communication"],0,"Raw → cleaning first."],
+[17,"A feature is:",["A measurable property used by a model","A bug","A label only","A chart"],0,"E.g. house area."],
+[18,"Which paradigm uses labelled data?",["Supervised","Unsupervised","Reinforcement","None"],0,"Labels = supervised."],
+[18,"Predicting marks from study hours is:",["Regression","Clustering","Reward learning","Sorting"],0,"Numeric prediction."],
+[19,"Grouping customers without labels is:",["Unsupervised learning","Supervised learning","Reinforcement learning","Encryption"],0,"Clustering."],
+[20,"Learning by rewards and penalties is:",["Reinforcement learning","Supervised learning","Unsupervised learning","Database design"],0,"Agent and reward."],
+[21,"HCI focuses on:",["Interaction between humans and computers","Compilers","Networking","Hardware repair"],0,"People and interfaces."],
+[22,"Data science and AI are:",["Overlapping but not identical","Identical","Unrelated","Opposites"],0,"They share methods."],
+[23,"Which comes right after Evaluation in AI workflow?",["Deployment","Problem","Data collection","Representation"],0,"Evaluate then deploy."],
+[24,"Last stage of data science workflow:",["Decision","Cleaning","Exploration","Problem Definition"],0,"Ends with decision."]
+];
+/* ===== STATE / localStorage ===== */
+let S=JSON.parse(localStorage.getItem("aim")||"null")||{done:{},scores:[],known:{},hard:{},stat:{},last:null,theme:"dark",ach:{}};
+function saveProgress(){localStorage.setItem("aim",JSON.stringify(S))}
+const $=s=>document.querySelector(s),app=$("#app");
+const U=u=>L.map((l,i)=>i).filter(i=>L[i][1]==u);
+const pct=a=>a.length?Math.round(a.filter(i=>S.done[L[i][0]]).length/a.length*100):0;
+const avg=()=>S.scores.length?Math.round(S.scores.reduce((a,b)=>a+b,0)/S.scores.length):0;
+function weak(){return Object.keys(S.stat).filter(k=>S.stat[k].t>0&&S.stat[k].c/S.stat[k].t<.6).map(Number)}
+function applyTheme(){document.documentElement.dataset.theme=S.theme}
+function toggleTheme(){S.theme=S.theme=="dark"?"light":"dark";applyTheme();saveProgress()}
+/* ===== NAVIGATION ===== */
+const NAV=[["dash","Dashboard"],["syllabus","Syllabus"],["cards","Flashcards"],["quiz","Quiz Center"],["exam","Exam Mode"],["compare","Comparison Tables"],["revise","Revision Mode"],["cheat","Cheat Sheets"],["progress","Progress & Achievements"],["search","Search"]];
+function navigateTo(v,a){location.hash=a!==undefined?v+"/"+a:v}
+function route(){const[h,a]=(location.hash.slice(1)||"dash").split("/");$("#nav").classList.remove("open");
+ $("#nav").innerHTML='<div class="logo">AI Mastery</div>'+NAV.map(n=>`<button class="${n[0]==h?"on":""}" onclick="navigateTo('${n[0]}')">${n[1]}</button>`).join("")+'<button onclick="toggleTheme()">◐ Toggle theme</button><button onclick="resetAll()">Reset progress</button>';
+ const R={dash:renderDashboard,syllabus:renderSyllabus,lesson:()=>renderLesson(+a),cards:renderCards,quiz:renderQuizCenter,exam:()=>startExam(),compare:renderCompare,revise:()=>renderRevision(a||5),cheat:renderCheatSheet,progress:renderProgress,search:()=>renderSearch(a||"")};
+ clearInterval(timer);(R[h]||renderDashboard)();app.focus();scrollTo(0,0)}
+addEventListener("hashchange",route);$("#menu").onclick=()=>$("#nav").classList.toggle("open");
+function resetAll(){if(confirm("Erase all progress?")){localStorage.removeItem("aim");location.reload()}}
+/* ===== DASHBOARD ===== */
+function renderDashboard(){const all=L.map((l,i)=>i),w=weak(),l=S.last;
+ const rev=[...w,...all.filter(i=>!S.done[L[i][0]])].slice(0,4);
+ app.innerHTML=`<div class="hero"><h1>Understand Artificial Intelligence.</h1><p>Learn AI concepts, intelligent agents, ethics, data, machine learning paradigms and AI workflows through interactive lessons, visualizations, quizzes and exam-focused revision.</p>
+ <div class="flow"><span>DATA</span>→<span>AI SYSTEM</span>→<span>LEARNING</span>→<span>DECISION</span>→<span>OUTPUT</span></div>
+ <button class="btn" onclick="navigateTo('lesson',${l??0})">Start Learning</button><button class="btn alt" onclick="navigateTo('quiz')">Take a Quiz</button>
+ <p class="mu">25 Topics · ${Q.length} Questions · Interactive Visualizations · Exam Mode</p></div>
+ <div class="grid">${[["Overall",pct(all)+"%"],["Unit 1",pct(U(1))+"%"],["Unit 2",pct(U(2))+"%"],["Topics done",Object.keys(S.done).length+"/25"],["Quiz average",avg()+"%"],["Flashcards reviewed",Object.keys(S.known).length+Object.keys(S.hard).length],["Exam readiness",Math.round(pct(all)*.5+avg()*.5)+"%"]].map(x=>`<div class="card"><div class="stat">${x[1]}</div><div class="mu">${x[0]}</div></div>`).join("")}</div>
+ <div class="card"><h3>Continue learning</h3>${l!=null?`<button class="btn" onclick="navigateTo('lesson',${l})">${L[l][2]}</button>`:'<p class="mu">No topic visited yet.</p>'}</div>
+ <div class="card"><h3>Today's revision</h3>${rev.map(i=>`<button class="btn alt" onclick="navigateTo('lesson',${i})">${L[i][2]}</button>`).join("")}</div>
+ <div class="card"><h3>Weak areas</h3>${w.length?w.map(i=>`<button class="btn alt" onclick="navigateTo('lesson',${i})">${L[i][2]}</button>`).join(""):'<p class="mu">Take quizzes; topics under 60% appear here.</p>'}</div>
+ <div class="card"><h3>Quick actions</h3>${[["quiz","Start Quiz"],["cards","Flashcards"],["exam","Exam Mode"],["revise","Revision Mode"],["cheat","Cheat Sheet"]].map(a=>`<button class="btn" onclick="navigateTo('${a[0]}')">${a[1]}</button>`).join("")}</div>`}
+/* ===== SYLLABUS ===== */
+function renderSyllabus(){const t=["","Introduction to AI and Ethics","Data, Learning Paradigms and Data Science"];
+ app.innerHTML=[1,2].map(u=>`<h2>Unit ${u}: ${t[u]}</h2><div class="grid">${U(u).map(i=>`<div class="card"><b>${i+1}. ${L[i][2]}</b><br><span class="tag">${L[i][3]}</span> <span class="${S.done[L[i][0]]?"done":"mu"}">${S.done[L[i][0]]?"✔ Completed":"Not started"}</span><br><button class="btn" onclick="navigateTo('lesson',${i})">Start Learning</button></div>`).join("")}</div>`).join("")}
+/* ===== LESSON ===== */
+function markTopicCompleted(i){S.done[L[i][0]]=1;saveProgress();checkAch();renderLesson(i)}
+function renderLesson(i){const l=L[i];S.last=i;saveProgress();
+ const qs=Q.map((q,k)=>k).filter(k=>Q[k][0]==i);
+ app.innerHTML=`<h2>${i+1}. ${l[2]}</h2><span class="tag">Unit ${l[1]} · ${l[3]}</span>
+ <div class="card"><h3>Simple definition</h3><p>${l[4]}</p></div><div class="card"><h3>Detailed explanation</h3><p>${l[5]}</p></div>
+ <div class="card"><h3>Key concepts</h3><ul>${l[6].map(k=>`<li>${k}</li>`).join("")}</ul></div>
+ <div class="card"><h3>Real-world example</h3><p>${l[7]}</p></div>
+ <div class="card"><h3>Visual</h3><div id="viz"></div></div>
+ <div class="card"><h3>Exam points</h3><p>${l[8]}</p></div>
+ <div class="card"><h3>Mini practice task</h3><p>Write a 4-line answer to "Explain ${l[2]}" without looking, then compare with the key concepts above.</p></div>
+ <div class="card"><h3>Practice MCQs</h3>${qs.length?qs.map(k=>mcqHTML(k)).join(""):""}</div>
+ <button class="btn" onclick="markTopicCompleted(${i})">${S.done[l[0]]?"✔ Completed":"Mark as completed"}</button>
+ ${i>0?`<button class="btn alt" onclick="navigateTo('lesson',${i-1})">Previous</button>`:""}${i<24?`<button class="btn alt" onclick="navigateTo('lesson',${i+1})">Next</button>`:""}`;
+ viz(l[0])}
+function mcqHTML(k){const q=Q[k];return`<div class="mcq" data-k="${k}"><p><b>${q[1]}</b></p>${q[2].map((o,j)=>`<button class="opt" onclick="inlineAnswer(this,${k},${j})">${o}</button>`).join("")}<p class="mu" hidden></p></div>`}
+function inlineAnswer(b,k,j){const q=Q[k],box=b.parentNode;if(box.dataset.d)return;box.dataset.d=1;
+ [...box.querySelectorAll(".opt")].forEach((o,x)=>{if(x==q[3])o.classList.add("right");else if(x==j)o.classList.add("wrong")});
+ const p=box.querySelector(".mu");p.hidden=false;p.textContent=(j==q[3]?"Correct. ":"Incorrect. ")+q[4];record(q[0],j==q[3])}
+function record(t,ok){const s=S.stat[t]||(S.stat[t]={c:0,t:0});s.t++;if(ok)s.c++;saveProgress();checkAch()}
+/* ===== VISUALIZATIONS (playground) ===== */
+function flowHTML(a){return`<div class="flow">${a.map(x=>`<span>${x}</span>`).join("→")}</div>`}
+function viz(id){const v=$("#viz");
+ const F={ "ai-scope":flowHTML(["AI","ML","NLP","Computer Vision","Robotics","Expert Systems"]),
+ "bias":flowHTML(["Training data","Biased data","AI model","Biased output"]),
+ "transparency":flowHTML(["Input","AI","Decision","Explanation"])+flowHTML(["Input","BLACK BOX","Decision"]),
+ "collection":flowHTML(["Data sources","Collection","Storage","Processing","Analysis"]),
+ "representation":flowHTML(["Real object","Data","Features","ML system"]),
+ "hci":flowHTML(["Human","Interface","AI / Computer","Output","Human"]),
+ "datascience":flowHTML(["Data","Processing","Analysis","Insights","Decision"]),
+ "accountability":flowHTML(["Harm occurs","Investigate","Identify developer / organisation / owner / user","Fix and compensate"]),
+ "ai-def":flowHTML(["Data","AI system","Learning","Decision","Output"]),
+ "ai-apps":'<p>Healthcare · Finance · Manufacturing · Retail · Transportation · Education · Cybersecurity · Agriculture</p>',
+ "ethics":flowHTML(["Bias","Transparency","Privacy","Accountability","Responsible AI"]),
+ "data-types":'<div class="tbl"><table><tr><th>Type</th><th>Structure</th><th>Examples</th></tr><tr><td>Structured</td><td>Fixed schema</td><td>Tables</td></tr><tr><td>Semi-structured</td><td>Tags/keys</td><td>JSON, XML</td></tr><tr><td>Unstructured</td><td>None</td><td>Images, audio, text</td></tr></table></div>',
+ "structured":'<div class="tbl"><table><tr><th>ID</th><th>Name</th><th>Age</th><th>City</th></tr><tr><td>1</td><td>John</td><td>21</td><td>Ahmedabad</td></tr><tr><td>2</td><td>Asha</td><td>20</td><td>Surat</td></tr></table></div><p class="mu">Every row has the same columns, so it is structured.</p>',
+ "semi":'<pre class="card">{\n  "name": "John",\n  "age": 21,\n  "address": { "city": "Ahmedabad" }\n}</pre><p class="mu">Keys: name, age, address. Values: John, 21. "address" is nested.</p>',
+ "unstructured":'<div class="grid">'+["🖼 Images","🎬 Video","🎧 Audio","📄 Documents","💬 Text"].map(x=>`<div class="card">${x}</div>`).join("")+'</div>',
+ "unsupervised":'<svg viewBox="0 0 300 120" width="100%" height="140"><g fill="#22d3ee"><circle cx="30" cy="30" r="6"/><circle cx="50" cy="45" r="6"/><circle cx="40" cy="60" r="6"/></g><g fill="#8b5cf6"><circle cx="140" cy="80" r="6"/><circle cx="160" cy="95" r="6"/><circle cx="150" cy="70" r="6"/></g><g fill="#3d7bff"><circle cx="250" cy="30" r="6"/><circle cx="270" cy="45" r="6"/><circle cx="255" cy="55" r="6"/></g></svg><p class="mu">Three natural groups found without labels.</p>',
+ "ai-history":null,"agents":null,"preprocessing":null,"supervised":null,"reinforcement":null,"responsible":null,"aiworkflow":null,"dsworkflow":null};
+ if(F[id])v.innerHTML=F[id];
+ else if(id=="ai-history")timeline(v);else if(id=="agents")agentSim(v);else if(id=="preprocessing")prep(v);else if(id=="supervised")sup(v);else if(id=="reinforcement")grid(v);else if(id=="responsible")checklist(v);else workflow(v,id);}
+function timeline(v){const T=[["1940s–50s","Early ideas","Turing asks if machines can think."],["1956","Birth of AI","Dartmouth workshop names the field."],["1956–70s","Early research","Game playing, logic programs."],["1980s","Expert systems","Rule-based systems in medicine and business."],["1974–1990s","AI winters","Funding falls after unmet promises."],["1990s–2000s","Machine learning","Systems learn from data."],["2010s","Deep learning","Large neural networks win in vision and speech."],["2020s","Modern AI","Widely used assistants and generative tools."]];
+ v.innerHTML=`<div class="flow">${T.map((t,i)=>`<button class="btn alt" onclick="tl(${i})">${t[1]}</button>`).join("")}</div><div class="card" id="tlb" aria-live="polite">Click a stage.</div>`;
+ window.tl=i=>$("#tlb").innerHTML=`<b>${T[i][1]}</b> (${T[i][0]})<br>${T[i][2]}`}
+function agentSim(v){const G=[1,0,1,1,0];let p=0,steps=[];
+ const draw=()=>{v.innerHTML=`<p class="mu">Room cleaning agent. 1 = dirty, 0 = clean. Sensor reads the current cell.</p><div>${G.map((d,i)=>`<span class="cell" style="${i==p?"border-color:var(--cy);border-width:3px":""}">${i==p?"🤖":d?"💩":"✨"}</span>`).join("")}</div><button class="btn" id="st">Step</button><button class="btn alt" id="rs">Reset</button><ul>${steps.slice(-4).map(s=>`<li>${s}</li>`).join("")}</ul>`;
+  $("#st").onclick=()=>{let m;if(G[p]){G[p]=0;m=`Sensor: dirty → Decision: clean → Action: clean cell ${p}`}else if(G.includes(1)){p=(p+1)%G.length;m=`Sensor: clean → Decision: move → Action: move to ${p}`}else m="All clean. Agent idle.";steps.push(m);draw()};
+  $("#rs").onclick=()=>{[1,0,1,1,0].forEach((x,i)=>G[i]=x);p=0;steps=[];draw()}};draw()}
+function prep(v){let after=false;const draw=()=>{v.innerHTML=flowHTML(["Raw data","Cleaning","Missing values","Remove duplicates","Transformation","Normalisation","Prepared data"])+`<button class="btn" id="tg">${after?"Show raw":"Apply preprocessing"}</button><div class="tbl"><table><tr><th>Name</th><th>Age</th><th>Score</th></tr>${(after?[["John",20,"0.5"],["Alex",20,"1.0"]]:[["John",20,90],["Alex","?",85],["John",20,90]]).map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</table></div><p class="mu">${after?"Duplicate removed, missing age filled with mean (20), scores normalised.":"Contains a duplicate row and a missing age."}</p>`;$("#tg").onclick=()=>{after=!after;draw()}};draw()}
+function sup(v){v.innerHTML=flowHTML(["Student data","Training","Model","Prediction"])+`<p>Study hours: <input type="range" id="h" min="0" max="10" value="5"> <b id="hv">5</b></p><p>Expected marks (simple model learned from examples): <b id="mk">55</b></p>`;
+ $("#h").oninput=e=>{$("#hv").textContent=e.target.value;$("#mk").textContent=Math.min(100,30+e.target.value*5)}}
+function grid(v){let r=0,c=0,tot=0,log="";const goal=[3,3],bad=["1,1","2,3","3,1"];
+ const draw=()=>{let h="";for(let i=0;i<4;i++){for(let j=0;j<4;j++)h+=`<span class="cell">${i==r&&j==c?"🤖":i==3&&j==3?"⭐":bad.includes(i+","+j)?"⬛":""}</span>`;h+="<br>"}
+  v.innerHTML=`<div>${h}</div>${["Up","Down","Left","Right"].map((a,i)=>`<button class="btn" onclick="mv(${i})">${a}</button>`).join("")}<button class="btn alt" onclick="mv(-1)">Reset</button><p>State: (${r},${c}) · ${log||"Reach ⭐ (+10), avoid ⬛ (−5)"} · Total reward: <b>${tot}</b></p>`};
+ window.mv=a=>{if(a<0){r=c=tot=0;log="";return draw()}const d=[[-1,0],[1,0],[0,-1],[0,1]][a];r=Math.max(0,Math.min(3,r+d[0]));c=Math.max(0,Math.min(3,c+d[1]));let rw=0;if(r==3&&c==3){rw=10;log="Action: "+["Up","Down","Left","Right"][a]+", Reward +10 (goal!)";r=c=0}else if(bad.includes(r+","+c)){rw=-5;log="Action: "+["Up","Down","Left","Right"][a]+", Penalty −5";r=c=0}else log="Action: "+["Up","Down","Left","Right"][a]+", Reward 0";tot+=rw;draw()};draw()}
+function checklist(v){const P=["Fair","Transparent","Privacy-aware","Secure","Accountable","Human oversight"];
+ v.innerHTML=P.map((p,i)=>`<label style="display:block"><input type="checkbox" onchange="ck()" class="ckb"> ${p}</label>`).join("")+'<p id="ckr" class="mu">0/6 satisfied.</p>';
+ window.ck=()=>{const n=document.querySelectorAll(".ckb:checked").length;$("#ckr").textContent=n+"/6 satisfied"+(n==6?" — responsible AI checklist complete.":".")}}
+function workflow(v,id){const W=WF[id];if(!W){v.innerHTML="<p class='mu'>Study the explanation above.</p>";return}
+ v.innerHTML=`<div class="flow">${W.map((w,i)=>`<button class="btn alt" onclick="wf('${id}',${i})">${w.split("|")[0]}</button>`).join("→")}</div><div class="card" id="wfb">Click a stage.</div>`;
+ window.wf=(id,i)=>$("#wfb").innerHTML=`<b>${WF[id][i].split("|")[0]}</b>: ${WF[id][i].split("|")[1]}`}
+/* ===== FLASHCARDS ===== */
+let fi=0,fl=false,deck=L.map((l,i)=>i);
+function renderCards(){const l=L[deck[fi]];
+ app.innerHTML=`<h2>Flashcards</h2><p class="mu">Card ${fi+1}/${deck.length} · Known ${Object.keys(S.known).length} · Difficult ${Object.keys(S.hard).length}</p>
+ <div class="card fc" tabindex="0" role="button" onclick="flipFlashcard()" onkeydown="if(event.key=='Enter'||event.key==' ')flipFlashcard()">${fl?l[4]:"What is: "+l[2]+"?"}</div>
+ <button class="btn alt" onclick="fc(-1)">Previous</button><button class="btn" onclick="flipFlashcard()">Flip</button><button class="btn alt" onclick="fc(1)">Next</button>
+ <button class="btn alt" onclick="deck.sort(()=>Math.random()-.5);fi=0;fl=false;renderCards()">Shuffle</button>
+ <button class="btn" onclick="mark('known')">Mark known</button><button class="btn" onclick="mark('hard')">Mark difficult</button><button class="btn alt" onclick="S.known={};S.hard={};saveProgress();renderCards()">Reset</button>`}
+function flipFlashcard(){fl=!fl;renderCards()}
+function fc(d){fi=(fi+d+deck.length)%deck.length;fl=false;renderCards()}
+function mark(t){const id=L[deck[fi]][0];delete S.known[id];delete S.hard[id];S[t][id]=1;saveProgress();fc(1)}
+/* ===== QUIZ ENGINE ===== */
+let qz=null,timer=null;
+function renderQuizCenter(){const C=[["Unit 1 Quiz",k=>L[Q[k][0]][1]==1],["Unit 2 Quiz",k=>L[Q[k][0]][1]==2],["AI Basics",k=>Q[k][0]<5],["AI Ethics",k=>Q[k][0]>4&&Q[k][0]<11],["Data",k=>Q[k][0]>10&&Q[k][0]<18],["Learning Paradigms",k=>Q[k][0]>17&&Q[k][0]<21],["HCI",k=>Q[k][0]==21],["AI Workflows",k=>Q[k][0]>22],["Full Syllabus",k=>1],["Weak Topics",k=>weak().includes(Q[k][0])]];
+ window.QC=C;app.innerHTML=`<h2>Quiz Center</h2><div class="grid">${C.map((c,i)=>`<div class="card"><b>${c[0]}</b><br><button class="btn" onclick="startQuiz(${i})">Start</button></div>`).join("")}</div>`}
+function startQuiz(i){let ids=Q.map((q,k)=>k).filter(QC[i][1]);if(!ids.length){alert("No weak topics yet. Take another quiz first.");return}
+ qz={ids:ids.sort(()=>Math.random()-.5),i:0,a:{},m:{},exam:false,t0:Date.now(),name:QC[i][0]};renderQuiz()}
+function renderQuiz(){const q=Q[qz.ids[qz.i]],a=qz.a[qz.i];
+ app.innerHTML=`<h2>${qz.name}${qz.exam?` <span id="tm" class="tag"></span>`:""}</h2><p class="mu">Question ${qz.i+1}/${qz.ids.length} · ${q[2].length==2?"True/False":"MCQ"}</p><div class="card"><p><b>${q[1]}</b></p>${q[2].map((o,j)=>`<button class="opt ${a==j?"sel":""} ${!qz.exam&&a!==undefined?(j==q[3]?"right":j==a?"wrong":""):""}" onclick="checkAnswer(${j})">${o}</button>`).join("")}${!qz.exam&&a!==undefined?`<p class="mu">${q[4]}</p>`:""}</div>
+ <button class="btn alt" onclick="qn(-1)">Previous</button><button class="btn alt" onclick="qn(1)">Next</button>${qz.exam?`<button class="btn alt" onclick="qz.m[qz.i]=!qz.m[qz.i];renderQuiz()">${qz.m[qz.i]?"Unmark":"Mark for review"}</button>`:""}<button class="btn" onclick="${qz.exam?"submitExam()":"renderResults()"}">Submit</button>
+ ${qz.exam?`<div class="pal card">${qz.ids.map((_,k)=>`<button class="${qz.a[k]!==undefined?"a":""} ${qz.m[k]?"m":""}" onclick="qz.i=${k};renderQuiz()">${k+1}</button>`).join("")}</div>`:""}`;tick()}
+function checkAnswer(j){if(!qz.exam&&qz.a[qz.i]!==undefined)return;qz.a[qz.i]=j;renderQuiz()}
+function qn(d){qz.i=Math.max(0,Math.min(qz.ids.length-1,qz.i+d));renderQuiz()}
+/* ===== EXAM MODE with timer ===== */
+function startExam(){const ids=Q.map((q,k)=>k).sort(()=>Math.random()-.5).slice(0,20);qz={ids,i:0,a:{},m:{},exam:true,t0:Date.now(),end:Date.now()+20*60000,name:"Mock Exam (20 min)"};renderQuiz()}
+function tick(){clearInterval(timer);if(!qz||!qz.exam)return;timer=setInterval(()=>{const s=Math.max(0,Math.round((qz.end-Date.now())/1000)),e=$("#tm");if(e)e.textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");if(s<=0){clearInterval(timer);submitExam()}},500)}
+function submitExam(){clearInterval(timer);renderResults()}
+/* ===== RESULTS ===== */
+function calculateScore(){let c=0,w=0,s=0,by={};qz.ids.forEach((k,i)=>{const q=Q[k],t=L[q[0]][2];by[t]=by[t]||[0,0,q[0]];by[t][1]++;if(qz.a[i]===undefined)s++;else if(qz.a[i]==q[3]){c++;by[t][0]++}else w++});return{c,w,s,by}}
+function renderResults(){clearInterval(timer);const r=calculateScore(),n=qz.ids.length,p=Math.round(r.c/n*100),sec=Math.round((Date.now()-qz.t0)/1000);
+ qz.ids.forEach((k,i)=>{if(qz.a[i]!==undefined)record(Q[k][0],qz.a[i]==Q[k][3])});S.scores.push(p);saveProgress();checkAch(p);
+ const wk=Object.entries(r.by).filter(e=>e[1][0]/e[1][1]<.6);
+ app.innerHTML=`<h2>Results</h2><div class="card"><div class="stat">${r.c}/${n} · ${p}%</div><p>Correct ${r.c} · Incorrect ${r.w} · Skipped ${r.s} · Time ${Math.floor(sec/60)}m ${sec%60}s</p></div>
+ <div class="card"><h3>Topic-wise</h3>${Object.entries(r.by).map(e=>`<p>${e[0]}: ${e[1][0]}/${e[1][1]}</p>`).join("")}</div>
+ <div class="card"><h3>Needs revision</h3>${wk.length?wk.map(e=>`<button class="btn alt" onclick="navigateTo('lesson',${e[1][2]})">${e[0]}</button>`).join(""):"Nothing — strong performance."}</div>
+ <div class="card"><h3>Review mistakes</h3>${qz.ids.map((k,i)=>qz.a[i]!==undefined&&qz.a[i]!=Q[k][3]?`<p><b>${Q[k][1]}</b><br>Your answer: ${Q[k][2][qz.a[i]]}<br>Correct: ${Q[k][2][Q[k][3]]}<br><span class="mu">${Q[k][4]}</span></p>`:"").join("")||"No mistakes."}</div>
+ <button class="btn" onclick="navigateTo('${qz.exam?"exam":"quiz"}');route()">${qz.exam?"Retake exam":"More quizzes"}</button>`}
+/* ===== COMPARISON / CHEAT SHEETS / REVISION ===== */
+const CMP=[["Learning paradigms",["Feature","Supervised","Unsupervised","Reinforcement"],[["Training data","Labelled","Unlabelled","Interaction experience"],["Goal","Predict output","Find patterns","Maximise reward"],["Feedback","Correct labels","None","Reward/penalty"],["Examples","Spam detection","Customer grouping","Game playing"]]],
+["Data types",["Type","Structure","Examples","AI usage"],[["Structured","Fixed schema","Tables","Direct to ML"],["Semi-structured","Tags/keys","JSON, XML","Parse then use"],["Unstructured","None","Images, text","Feature extraction"]]],
+["AI vs Data Science",["Aspect","AI","Data Science"],[["Focus","Intelligent behaviour","Insights from data"],["Output","Decisions/actions by system","Reports and decisions by people"],["Relation","Uses data science methods","Uses AI/ML as tools"]]],
+["AI vs ML vs Traditional programming",["Aspect","Traditional","Machine Learning","AI"],[["Rules","Written by hand","Learned from data","Broad field including ML"],["Input","Data+rules","Data+answers","Goals+environment"]]],
+["Ethics themes",["Theme","Question","Example"],[["Bias","Is it fair?","Skewed hiring"],["Transparency","Can we explain it?","Loan reasons"],["Privacy","Is data protected?","Location tracking"],["Accountability","Who is responsible?","Faulty medical AI"]]],
+["AI vs Data Science workflow",["Aspect","AI workflow","Data science workflow"],[["Start","Problem","Problem definition"],["Middle","Representation, model development","Cleaning, exploration, analysis"],["End","Deployment and monitoring","Communication and decision"]]]];
+function renderCompare(){app.innerHTML=`<h2>Comparison Tables</h2>`+CMP.map(c=>`<div class="card"><h3>${c[0]}</h3><div class="tbl"><table><tr>${c[1].map(h=>`<th>${h}</th>`).join("")}</tr>${c[2].map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join("")}</tr>`).join("")}</table></div></div>`).join("")}
+function renderCheatSheet(){app.innerHTML=`<h2>Cheat Sheets</h2><div class="grid">${L.map(l=>`<div class="card"><b>${l[2]}</b><p>${l[4]}</p><ul>${l[6].map(k=>`<li>${k}</li>`).join("")}</ul></div>`).join("")}</div>`}
+function renderRevision(m){m=+m;app.innerHTML=`<h2>Revision Mode</h2>${[5,15,30,60].map(x=>`<button class="btn ${x==m?"":"alt"}" onclick="navigateTo('revise',${x})">${x==60?"Full":x+" min"}</button>`).join("")}`+L.map((l,i)=>`<div class="card"><b>${i+1}. ${l[2]}</b><p>${l[4]}</p>${m>=15?`<p>${l[7]}</p><p class="mu">${l[8]}</p>`:""}${m>=30?`<ul>${l[6].map(k=>`<li>${k}</li>`).join("")}</ul>`:""}${m>=60?`<p>${l[5]}</p>`:""}</div>`).join("")}
+/* ===== PROGRESS & ACHIEVEMENTS ===== */
+const AC=[["🏆 First Topic Completed",()=>Object.keys(S.done).length>=1],["🔥 5 Topics Completed",()=>Object.keys(S.done).length>=5],["🧠 10 Quiz Questions Correct",()=>Object.values(S.stat).reduce((a,b)=>a+b.c,0)>=10],["🎯 80% Quiz Score",()=>S.scores.some(s=>s>=80)],["📚 Unit 1 Completed",()=>pct(U(1))==100],["📊 Data Master",()=>[11,12,13,14,15,16,17].every(i=>S.done[L[i][0]])],["⚡ Learning Paradigms Master",()=>[18,19,20].every(i=>S.done[L[i][0]])],["👑 Full Syllabus Completed",()=>Object.keys(S.done).length==25]];
+function checkAch(){AC.forEach((a,i)=>{if(a[1]())S.ach[i]=1});saveProgress()}
+function renderProgress(){checkAch();app.innerHTML=`<h2>Progress</h2><div class="card"><div class="bar"><i style="width:${pct(L.map((l,i)=>i))}%"></i></div><p>Overall ${pct(L.map((l,i)=>i))}% · Unit 1 ${pct(U(1))}% · Unit 2 ${pct(U(2))}% · Quiz average ${avg()}% · Exam attempts ${S.scores.length}</p></div><div class="card"><h3>Achievements</h3>${AC.map((a,i)=>`<p class="${S.ach[i]?"done":"mu"}">${a[0]} ${S.ach[i]?"— unlocked":"— locked"}</p>`).join("")}</div>`}
+/* ===== SEARCH ===== */
+function searchContent(t){t=t.toLowerCase();if(!t)return[];return L.map((l,i)=>[i,l]).filter(x=>x[1].slice(2).join(" ").toLowerCase().includes(t))}
+function renderSearch(q){app.innerHTML=`<h2>Search</h2><input type="search" id="sq" placeholder="Search topics, definitions, examples" value="${q}" aria-label="Search"><div id="sr"></div>`;
+ const go=()=>{const r=searchContent($("#sq").value);$("#sr").innerHTML=r.map(x=>`<div class="card"><b>${x[0]+1}. ${x[1][2]}</b><p>${x[1][4]}</p><button class="btn" onclick="navigateTo('lesson',${x[0]})">Open</button></div>`).join("")||'<p class="mu">No matches.</p>'};$("#sq").oninput=go;go()}
+applyTheme();route();
+</script></body></html>
